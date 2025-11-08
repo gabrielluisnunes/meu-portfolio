@@ -31,7 +31,7 @@ const Hero = () => {
     return (
         <HeroSection>
             <h1>Bem-vindo ao Meu Portfólio</h1>
-            <p>Explorando projetos incríveis com Next.js, React e TypeScript</p>
+            <p>Estudante ADS | Full Stack Developer | Java, TypeScript & JavaScript | React, Next.js, Spring Boot</p>
         </HeroSection>
     );
 }

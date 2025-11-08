@@ -1,15 +1,18 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-// ⚠️ 1. Importar o componente StyledComponentsRegistry
-import StyledComponentsRegistry from './lib/StyledComponentsRegistry'; 
+import StyledComponentsRegistry from './lib/StyledComponentsRegistry';
+import { GlobalStyles } from './globalStyles'; 
 
-// Importa a fonte do Google que o Next.js já configurou
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+
 const inter = Inter({ subsets: ['latin'] }); 
 
-// Metadados para SEO - Título e descrição do seu portfólio
+// 1. Definindo Metadados (SEO)
 export const metadata: Metadata = {
-  title: 'Meu Portfólio Moderno',
-  description: 'Projetos Front-end utilizando Next.js, React e TypeScript.',
+  title: 'Gabriel | Portfólio',
 };
 
 export default function RootLayout({
@@ -20,9 +23,23 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        {}
         <StyledComponentsRegistry>
-          {children}
+          
+          {}
+          <GlobalStyles />
+          
+          {}
+          <Header />
+          
+          {}
+          {}
+          <main style={{ flexGrow: 1 }}>
+            {children}
+          </main>
+          
+          {}
+          <Footer />
+
         </StyledComponentsRegistry>
       </body>
     </html>
