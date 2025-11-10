@@ -167,5 +167,5 @@ const ProjectCardGrid: React.FC = () => {
     );
 };
 
-// Mantemos o nome original do export para substituir o arquivo
+
 export default ProjectCardGrid;

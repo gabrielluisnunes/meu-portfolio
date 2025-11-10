@@ -2,7 +2,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-// Reutilizando os ícones de contato
+
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
 import { FiMail } from 'react-icons/fi';
 

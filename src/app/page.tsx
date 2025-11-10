@@ -15,7 +15,7 @@ import Footer from './components/Footer';
 const GOLD_COLOR = '#FFD700';
 const BRIGHT_GOLD = '#FFEB3B';
 
-// 🚨 NOVO CONTAINER PRINCIPAL ESTILIZADO PARA CORRIGIR O FOOTER
+
 const MainContainer = styled.main`
     background-color: #000000;
     position: relative;
