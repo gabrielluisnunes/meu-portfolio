@@ -29,11 +29,11 @@ export const projects: Project[] = [
   },
   {
     id: 3,
-    title: "Portfolio One-Page (Este Projeto)",
+    title: "Portfólio Gabriel",
     description: "Este portfólio demonstra habilidades em navegação por âncora, design responsivo, animações e organização de código.",
     techs: ["Next.js", "TypeScript", "Styled Components", "Swiper", "Animações CSS"],
-    imageUrl: "/images/portfolio.png",
-    projectUrl: "#", 
-    githubUrl: "https://github.com/Gabriel/meu-portfolio-moderno",
+    imageUrl: "/images/Portfolio.png",
+    projectUrl: "https://gabrielnunes-portfolio.vercel.app/", 
+    githubUrl: "https://github.com/gabrielluisnunes/meu-portfolio",
   },
 ];
