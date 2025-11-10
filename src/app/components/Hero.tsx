@@ -64,7 +64,7 @@ const CodeLineH1 = styled.h2`
     margin: 0;
 `;
 
-// Estilo para o Subtítulo
+
 const SubtitleP = styled.p`
     font-family: 'monospace', 'Courier New', Courier, monospace;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -81,7 +81,7 @@ const Hero: React.FC = () => {
             </TypingContainer>
             <SubtitleP>
                 {}
-                Desenvolvedor Front-end | Next.js | React
+                Desenvolvedor Full-Stack
             </SubtitleP>
         </HeroSection>
     );

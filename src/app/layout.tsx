@@ -24,7 +24,6 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <GlobalStyles />
           
-          <Header />
           
           {}
           <main style={{ flexGrow: 1, position: 'relative', zIndex: 1 }}>

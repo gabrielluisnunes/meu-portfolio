@@ -3,75 +3,100 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
-    e.preventDefault(); 
-    const targetElement = document.getElementById(targetId);
-    
-    if (targetElement) {
-        
-        window.scrollTo({
-            top: targetElement.offsetTop - 80, 
-            behavior: 'smooth'
-        });
+const GOLD_COLOR = '#FFD700'; 
+const BRIGHT_GOLD = '#FFEB3B'; 
+
+const HeaderContainer = styled.header`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Fundo PRETO SÓLIDO */
+    background-color: #000000; 
+    color: #ffffff;
+    z-index: 1000; 
+    transition: background-color 0.3s ease;
+    padding: 15px 5%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9); 
+     display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const Logo = styled.a`
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: ${BRIGHT_GOLD};
+    text-decoration: none;
+    font-family: 'monospace', monospace;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px rgba(255, 235, 59, 0.5); 
+
+    &:hover {
+        color: ${BRIGHT_GOLD};
     }
-};
-
-const StyledHeader = styled.header`
-  width: 100%;
-  padding: 1rem 5%; // Padding interno para evitar que o conteúdo toque as bordas
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: sticky; // Mantém o cabeçalho fixo ao rolar a página
-  top: 0;
-  z-index: 1000; // Garante que fique acima de outros elementos
 `;
 
-const NavContainer = styled.div`
-  display: flex;
-  justify-content: center; // Alinha itens no meio
-  align-items: center;
-  max-width: 1200px; // Limita a largura máxima no centro da tela
-  margin: 0 auto;
-`;
+const NavLinks = styled.nav`
+    display: flex;
+    gap: 30px;
 
-const NavList = styled.nav`
-  display: flex;
-  gap: 30px; // Espaço entre os links
-`;
+    a {
+        color: #cccccc;
+        font-size: 1rem;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 5px 0;
+        position: relative;
+        transition: color 0.3s ease;
 
-const NavLink = styled.a`
-  font-size: 1rem;
-  font-weight: 500;
-  color: #333;
-  transition: color 0.3s ease; // Transição suave para o efeito hover
+        &:hover {
+            color: ${BRIGHT_GOLD}; 
+        }
+        
+        &::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            background-color: ${BRIGHT_GOLD};
+            transition: width 0.3s ease, left 0.3s ease;
+        }
 
-  &:hover {
-    color: #0070f3; // Mudar a cor ao passar o mouse
-  }
+        &:hover::after {
+            width: 100%;
+            left: 0;
+            box-shadow: 0 0 5px ${BRIGHT_GOLD};
+        }
+    }
+
+    @media (max-width: 768px) {
+        /* Implemente o menu hamburguer aqui se precisar */
+        display: none; 
+    }
 `;
 
 const Header: React.FC = () => {
-  return (
-    <StyledHeader>
-      <NavContainer>
-        <NavList>
-        {}
-        <NavLink 
-          href="#sobre" 
-          onClick={(e) => handleScroll(e, 'sobre')}
-        >
-          Sobre Mim
-        </NavLink>
-        <NavLink 
-          href="#projetos" 
-          onClick={(e) => handleScroll(e, 'projetos')}
-        >
-          Projetos
-        </NavLink>
-      </NavList>
-      </NavContainer>
-    </StyledHeader>
-  );
-};
+    const sections = [
+        { name: 'Início', id: '#home' },
+        { name: 'Sobre Mim', id: '#sobre' },
+        { name: 'Projetos', id: '#projetos' },
+    ];
+
+    return (
+        <HeaderContainer>
+            <Logo href="#home">Olá, Mundo!</Logo>
+            <NavLinks>
+                {sections.map((section) => (
+                    <a key={section.id} href={section.id}>
+                        {section.name}
+                    </a>
+                ))}
+            </NavLinks>
+        </HeaderContainer>
+    );
+}
 
 export default Header;

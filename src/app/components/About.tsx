@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
-import { FiMail } from 'react-icons/fi';
+import { FiMail, FiDownload } from 'react-icons/fi';
 
 const GOLD_COLOR = '#FFD700'; 
 const BRIGHT_GOLD = '#FFEB3B'; 
@@ -83,8 +83,12 @@ const LinkContainer = styled.div`
     }
 `;
 
+
 const SocialLink = styled.a`
-    /* Estilo para botão retangular (ex: CV) */
+    display: inline-flex; /* Permite alinhar o ícone e o texto */
+    align-items: center;
+    gap: 8px; /* Espaçamento entre o ícone e o texto */
+    
     color: ${GOLD_COLOR};
     background-color: transparent;
     border: 2px solid ${GOLD_COLOR};
@@ -95,16 +99,15 @@ const SocialLink = styled.a`
     transition: all 0.3s ease;
     
     &:hover {
-        color: #000; /* Texto preto no hover */
-        background-color: ${BRIGHT_GOLD}; /* Preenchimento total com o dourado brilhante */
+        color: #000; 
+        background-color: ${BRIGHT_GOLD};
         border-color: ${BRIGHT_GOLD};
         transform: translateY(-2px);
-        box-shadow: 0 0 10px ${BRIGHT_GOLD}; /* Sombra para simular brilho */
+        box-shadow: 0 0 10px ${BRIGHT_GOLD}; 
     }
 `;
 
 const SocialLinkIcon = styled.a`
-    /* Estilo para ícones redondos (LinkedIn, GitHub, Gmail) */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,11 +126,14 @@ const SocialLinkIcon = styled.a`
         background-color: ${BRIGHT_GOLD};
         border-color: ${BRIGHT_GOLD};
         transform: translateY(-2px);
-        box-shadow: 0 0 10px ${BRIGHT_GOLD}; /* Sombra para simular brilho */
+        box-shadow: 0 0 10px ${BRIGHT_GOLD}; 
     }
 `;
 
 const About: React.FC = () => {
+    
+    const CV_PATH = '/docs/CV- GABRIEL LUIS PAREDE NUNES.pdf'; 
+
     return (
         <AboutContainer>
             
@@ -145,37 +151,38 @@ const About: React.FC = () => {
                 <h2>Olá! Eu sou Gabriel Luis Parede Nunes.</h2>
                 
                 <p>
-                    Desenvolvedor Front-end especializado em construir interfaces de usuário modernas, responsivas e de alta performance. 
-                    Minha paixão está em transformar designs complexos em código limpo e eficiente, focado sempre na melhor experiência para o usuário.
-                </p>
-                
-                <p>
-                    Sou proficiente em **Next.js**, **React**, **TypeScript** e **Styled Components**, e estou sempre explorando novas tecnologias 
-                    para expandir meu conhecimento.
+                  Desenvolvedor Full-Stack focado em construir soluções digitais robustas, elegantes e de alto desempenho.
+
+                  Minha abordagem ao desenvolvimento é profundamente influenciada pelo meu hobby de mais de 10 anos: o Jiu-Jitsu. No tatame, aprendi que a vitória não está na força bruta, mas sim na estratégia, na persistência e na adaptabilidade contínua.
+
+                  Essa mesma mentalidade se traduz diretamente para a programação: busco a técnica mais eficiente para cada desafio, dedicando-me à maestria do código e à solução de problemas com precisão. Seja no Front-end com o dinamismo do React/Next.js ou no Back-end com a fundação sólida de Node.js e arquitetura de dados.
+
+                  Meu foco é simples: Entregar projetos que não apenas atendam às expectativas, mas as superem, aplicando a mesma disciplina e foco que me guiam dentro e fora do código.
                 </p>
                 
                 <p style={{ fontWeight: 600, color: BRIGHT_GOLD }}>
-                    🚀 Vamos criar algo incrível juntos?
+                    Vamos criar algo incrível juntos?
                 </p>
                 
                 <LinkContainer>
-                    {/* LinkedIn */}
-                    <SocialLinkIcon href="[https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/]" target="_blank">
+                    {}
+                    <SocialLinkIcon href="https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/" target="_blank">
                         <FaLinkedinIn />
                     </SocialLinkIcon>
                     
-                    {/* GitHub */}
-                    <SocialLinkIcon href="[https://github.com/gabrielluisnunes]" target="_blank">
+                    {}
+                    <SocialLinkIcon href="https://github.com/gabrielluisnunes" target="_blank">
                         <FaGithub />
                     </SocialLinkIcon>
 
-                    {/* Email (Gmail) */}
-                    <SocialLinkIcon href="mailto:[gabrielluisnunes@gmail.com]" target="_blank">
+                    {}
+                    <SocialLinkIcon href="mailto:gabrielluisnunes@gmail.com" target="_blank">
                         <FiMail />
                     </SocialLinkIcon>
 
-                    {/* Botão de CV */}
-                    <SocialLink href="[ADICIONE O LINK PARA SEU CV AQUI]" target="_blank">
+                    {}
+                    <SocialLink href={CV_PATH} download="CV- GABRIEL LUIS PAREDE NUNES.pdf" target="_blank">
+                        <FiDownload size={20} />
                         Download CV
                     </SocialLink>
                 </LinkContainer>

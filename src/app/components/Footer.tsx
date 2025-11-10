@@ -2,47 +2,96 @@
 
 import React from 'react';
 import styled from 'styled-components';
+// Reutilizando os ícones de contato
+import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
+import { FiMail } from 'react-icons/fi';
 
+const GOLD_COLOR = '#FFD700'; 
+const BRIGHT_GOLD = '#FFEB3B'; 
 
-const StyledFooter = styled.footer`
-  width: 100%;
-  padding: 2rem 5%;
-  background-color: #1a1a1a; 
-  color: #f4f4f9; 
-  text-align: center;
-  margin-top: auto; 
-`;
-
-const FooterText = styled.p`
-  font-size: 0.9rem;
-  margin-top: 1rem;
-  opacity: 0.8;
+const FooterContainer = styled.footer`
+    width: 100%;
+    background-color: #000000;
+    color: #cccccc;
+    /* 🚨 TAMANHO REDUZIDO AQUI */
+    padding: 20px 5%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border-top: 1px solid rgba(255, 215, 0, 0.1); 
 `;
 
 const SocialLinks = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 1rem;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
 `;
 
-const SocialLink = styled.a`
-  color: #f4f4f9;
-  font-weight: 600;
-  transition: color 0.3s ease;
+const SocialLinkIcon = styled.a`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px; 
+    height: 45px;
+    color: ${GOLD_COLOR};
+    background-color: transparent;
+    border: 2px solid ${GOLD_COLOR};
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
 
-  &:hover {
-    color: #0070f3; // Efeito hover
-  }
+    &:hover {
+        color: #000;
+        background-color: ${BRIGHT_GOLD};
+        border-color: ${BRIGHT_GOLD};
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px ${BRIGHT_GOLD}; 
+    }
+`;
+
+const CopyrightText = styled.p`
+    font-size: 0.9rem;
+    color: #999999;
+    margin-top: 10px;
+    
+    strong {
+        color: ${GOLD_COLOR};
+        font-weight: 600;
+    }
 `;
 
 const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
-  return (
-    <StyledFooter>
-      <FooterText>&copy; {currentYear} Desenvolvedor Gabriel Luis Parede Nunes.</FooterText>
-    </StyledFooter>
-  );
+    const currentYear = new Date().getFullYear();
+    
+    return (
+        <FooterContainer>
+            <SocialLinks>
+                {/* LinkedIn */}
+                <SocialLinkIcon href="[https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/]" target="_blank">
+                    <FaLinkedinIn />
+                </SocialLinkIcon>
+                
+                {/* GitHub */}
+                <SocialLinkIcon href="[https://github.com/gabrielluisnunes]" target="_blank">
+                    <FaGithub />
+                </SocialLinkIcon>
+
+                {/* Email (Gmail) */}
+                <SocialLinkIcon href="mailto:[gabrielluisnunes@gmail.com]" target="_blank">
+                    <FiMail />
+                </SocialLinkIcon>
+            </SocialLinks>
+            
+            <CopyrightText>
+                &copy; {currentYear} Gabriel Luis. Todos os direitos reservados.
+            </CopyrightText>
+            <CopyrightText>
+                Desenvolvido com <strong>Next.js</strong> e <strong>Styled Components</strong>.
+            </CopyrightText>
+        </FooterContainer>
+    );
 };
 
 export default Footer;
