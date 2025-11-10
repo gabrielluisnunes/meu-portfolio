@@ -40,16 +40,6 @@ const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   return (
     <StyledFooter>
-      <p></p>
-      <SocialLinks>
-        <SocialLink href="https://github.com/gabrielluisnunes" target="_blank" rel="noopener noreferrer">
-          GitHub
-        </SocialLink>
-        <SocialLink href="https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/" target="_blank" rel="noopener noreferrer">
-          LinkedIn
-        </SocialLink>
-        {}
-      </SocialLinks>
       <FooterText>&copy; {currentYear} Desenvolvedor Gabriel Luis Parede Nunes.</FooterText>
     </StyledFooter>
   );

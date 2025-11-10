@@ -3,17 +3,12 @@ import { Inter } from 'next/font/google';
 import StyledComponentsRegistry from './lib/StyledComponentsRegistry';
 import { GlobalStyles } from './globalStyles'; 
 
-
 import Header from './components/Header';
 import Footer from './components/Footer';
-
+import StarParticlesBackground from './components/StarParticlesBackground';
 
 const inter = Inter({ subsets: ['latin'] }); 
 
-// 1. Definindo Metadados (SEO)
-export const metadata: Metadata = {
-  title: 'Gabriel | Portfólio',
-};
 
 export default function RootLayout({
   children,
@@ -23,21 +18,19 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
+        {}
+        <StarParticlesBackground />
+        
         <StyledComponentsRegistry>
-          
-          {}
           <GlobalStyles />
           
-          {}
           <Header />
           
-          {}
-          {}
-          <main style={{ flexGrow: 1 }}>
+          {/* Conteúdo da página */}
+          <main style={{ flexGrow: 1, position: 'relative', zIndex: 1 }}>
             {children}
           </main>
           
-          {}
           <Footer />
 
         </StyledComponentsRegistry>

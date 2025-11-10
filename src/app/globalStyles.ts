@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
     min-height: 100vh;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.6;
-    background-color: #ffffff;
+    background-color: transparent;
     color: #1a1a1a;
   }
   

@@ -57,12 +57,6 @@ const Header: React.FC = () => {
         <NavList>
         {}
         <NavLink 
-          href="#home" 
-          onClick={(e) => handleScroll(e, 'home')}
-        >
-          Início
-        </NavLink>
-        <NavLink 
           href="#sobre" 
           onClick={(e) => handleScroll(e, 'sobre')}
         >
@@ -73,12 +67,6 @@ const Header: React.FC = () => {
           onClick={(e) => handleScroll(e, 'projetos')}
         >
           Projetos
-        </NavLink>
-        <NavLink 
-          href="#contato" 
-          onClick={(e) => handleScroll(e, 'contato')}
-        >
-          Contato
         </NavLink>
       </NavList>
       </NavContainer>
