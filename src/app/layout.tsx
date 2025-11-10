@@ -26,7 +26,7 @@ export default function RootLayout({
           
           <Header />
           
-          {/* Conteúdo da página */}
+          {}
           <main style={{ flexGrow: 1, position: 'relative', zIndex: 1 }}>
             {children}
           </main>
