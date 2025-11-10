@@ -1,5 +1,5 @@
-🚀 Gabriel Luis | Portfólio Pessoal (Tema Dark Gold)
-Este é o repositório do portfólio pessoal de Gabriel Luis, desenvolvido para exibir projetos, habilidades e informações de contato de forma profissional e elegante.
+🚀 Gabriel Luis Parede Nunes | Portfólio Pessoal 
+Este é o repositório é um projeto meu pessoal, desenvolvido para exibir projetos, habilidades e informações de contato de forma profissional e elegante.
 
 O design segue uma estética minimalista com o tema "Dark Gold" (Preto e Dourado), utilizando uma arquitetura moderna baseada no Next.js.
 
