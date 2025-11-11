@@ -1,13 +1,22 @@
+
 'use client';
 
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-  // Reseta margens e paddings padrão de todos os elementos
+  
   * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; // Garante que padding e border não aumentem o tamanho do elemento
+    box-sizing: border-box;
+  }
+
+  
+  html {
+    overflow-x: hidden; /* Aplica o corte no elemento raiz */
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -16,6 +25,13 @@ export const GlobalStyles = createGlobalStyle`
     line-height: 1.6;
     background-color: transparent;
     color: #1a1a1a;
+    
+    
+    overflow-x: hidden; 
+    width: 100vw; 
+    
+    margin: 0; 
+    padding: 0;
   }
   
   a {

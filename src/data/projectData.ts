@@ -36,4 +36,14 @@ export const projects: Project[] = [
     projectUrl: "https://gabrielnunes-portfolio.vercel.app/", 
     githubUrl: "https://github.com/gabrielluisnunes/meu-portfolio",
   },
+{
+id: 3,
+    title: "MG Electric",
+    description: "Site para a empresa MG Electric, com uma cara nova e moderna, reforçando a presença digital da empresa.",
+    techs: ["HTML5", "JavaScript", "CSS3", "Shopify", "SEO"],
+    imageUrl: "/images/mg.png",
+    projectUrl: "https://mgelectric.com.br/", 
+    githubUrl: "",
+  },
+    
 ];
