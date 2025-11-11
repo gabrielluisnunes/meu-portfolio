@@ -86,7 +86,7 @@ export default function Home() {
             </SectionContainer>
             
             {/* {} */}
-            <Footer />
+            
             
         </MainContainer>
     );
