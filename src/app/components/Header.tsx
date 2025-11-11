@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const GOLD_COLOR = '#FFD700'; 
 const BRIGHT_GOLD = '#FFEB3B'; 
@@ -18,7 +19,7 @@ const HeaderContainer = styled.header`
     transition: background-color 0.3s ease;
     padding: 15px 5%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.9); 
-     display: flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 `;
@@ -37,7 +38,8 @@ const Logo = styled.a`
     }
 `;
 
-const NavLinks = styled.nav`
+
+const NavLinks = styled.nav<{ $isOpen: boolean}>`
     display: flex;
     gap: 30px;
 
@@ -72,25 +74,72 @@ const NavLinks = styled.nav`
         }
     }
 
+    
     @media (max-width: 768px) {
-        /* Implemente o menu hamburguer aqui se precisar */
-        display: none; 
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 60vw; 
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.95); 
+        backdrop-filter: blur(5px);
+        flex-direction: column; 
+        align-items: center;
+        justify-content: center;
+        padding: 50px 0;
+        
+        
+        transform: ${({ $isOpen }) => ($isOpen ? 'translateX(0)' : 'translateX(100%)')};
+        transition: transform 0.3s ease-in-out;
+
+        
+        a {
+            padding: 15px 0;
+            font-size: 1.2rem;
+        }
+    }
+`;
+
+const MobileMenuIcon = styled.div` 
+    display: none; 
+    font-size: 1.8rem;
+    color: ${BRIGHT_GOLD};
+    cursor: pointer;
+    z-index: 1001; 
+
+    &:hover {
+        filter: drop-shadow(0 0 5px ${BRIGHT_GOLD});
+    }
+
+    @media (max-width: 768px) {
+        display: block; /* Visível no mobile */
     }
 `;
 
 const Header: React.FC = () => {
+    const [isOpen, setIsOpen] = useState(false); 
     const sections = [
         { name: 'Início', id: '#home' },
         { name: 'Sobre Mim', id: '#sobre' },
+        { name: 'Habilidades', id: '#habilidades' }, 
         { name: 'Projetos', id: '#projetos' },
     ];
+    
+    const handleLinkClick = () => {
+        setIsOpen(false); 
+    };
 
     return (
         <HeaderContainer>
             <Logo href="#home">Olá, Mundo!</Logo>
-            <NavLinks>
+            
+            <MobileMenuIcon onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? <FaTimes /> : <FaBars />} 
+            </MobileMenuIcon>
+            
+            <NavLinks $isOpen={isOpen}>
                 {sections.map((section) => (
-                    <a key={section.id} href={section.id}>
+                    <a key={section.id} href={section.id} onClick={handleLinkClick}>
                         {section.name}
                     </a>
                 ))}
