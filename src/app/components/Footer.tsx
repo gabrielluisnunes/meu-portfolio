@@ -67,23 +67,7 @@ const Footer: React.FC = () => {
     
     return (
         <FooterContainer>
-            <SocialLinks>
-                {/* LinkedIn */}
-                <SocialLinkIcon href="[https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/]" target="_blank">
-                    <FaLinkedinIn />
-                </SocialLinkIcon>
-                
-                {/* GitHub */}
-                <SocialLinkIcon href="[https://github.com/gabrielluisnunes]" target="_blank">
-                    <FaGithub />
-                </SocialLinkIcon>
-
-                {/* Email (Gmail) */}
-                <SocialLinkIcon href="mailto:[gabrielluisnunes@gmail.com]" target="_blank">
-                    <FiMail />
-                </SocialLinkIcon>
-            </SocialLinks>
-            
+           
             <CopyrightText>
                 &copy; {currentYear} Gabriel Luis. Todos os direitos reservados.
             </CopyrightText>
