@@ -33,7 +33,7 @@ const ProjectsGrid = styled.div<{ $isMobile: boolean }>`
 
     ${({ $isMobile }) => $isMobile && css`
         display: flex;
-        overflow-x: auto;
+        overflow-x: scroll; 
         overflow-y: hidden;
         
         -ms-overflow-style: none;
@@ -45,10 +45,18 @@ const ProjectsGrid = styled.div<{ $isMobile: boolean }>`
         scroll-snap-type: x mandatory;
         gap: 30px; 
         flex-wrap: nowrap;
+        
+        
         padding: 0 5%; 
+        
         width: 100%;
         box-sizing: border-box;
+        
+        
+        scroll-padding-left: 50vw; 
         scroll-padding-left: 5%; 
+        
+        
     `}
 `;
 
@@ -69,7 +77,9 @@ const ProjectCard = styled.div`
 
     @media (max-width: 768px) {
         min-width: 80vw;
-        max-width: 80vw; /* Garante que o card não tente expandir além do min-width */
+        max-width: 80vw; 
+        
+        
         scroll-snap-align: center;
         flex-shrink: 0; 
 
@@ -207,6 +217,7 @@ const ProjectsSection: React.FC = () => {
         }
     }, [isClient]);
 
+    
     useEffect(() => {
         if (!gridRef.current || !isMobile) return;
 
@@ -216,7 +227,7 @@ const ProjectsSection: React.FC = () => {
             const scrollLeft = container.scrollLeft;
             const scrollWidth = container.scrollWidth - container.clientWidth;
 
-            if (scrollWidth === 0) return; 
+            if (scrollWidth <= 0) return; 
 
             const scrollProgress = scrollLeft / scrollWidth;
             
@@ -238,6 +249,7 @@ const ProjectsSection: React.FC = () => {
     const handleDotClick = (index: number) => {
         if (gridRef.current) {
             const container = gridRef.current;
+         
             const scrollWidth = container.scrollWidth - container.clientWidth;
             let targetScrollLeft = 0;
 
