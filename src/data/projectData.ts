@@ -37,13 +37,22 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/gabrielluisnunes/meu-portfolio",
   },
 {
-id: 3,
+id: 4,
     title: "MG Electric",
     description: "Site para a empresa MG Electric, com uma cara nova e moderna, reforçando a presença digital da empresa.",
     techs: ["HTML5", "JavaScript", "CSS3", "Shopify", "SEO"],
     imageUrl: "/images/mg.png",
     projectUrl: "https://mgelectric.com.br/", 
     githubUrl: "",
+  },
+{
+id: 5,
+    title: "PN Performance Mídia",
+    description: "O projeto consiste na criação da nova Landing Page institucional para a PN Performance, com o objetivo principal de otimizar a captação de leads qualificados através de uma experiência mobile e desktop de alta performance.",
+    techs: ["Next.js", "TypeScript", "Bootstrap", "React Bootstrap", "CSS3", "Vercel"],
+    imageUrl: "/images/pnlp.png",
+    projectUrl: "https://www.pnperformancemidia.com/", 
+    githubUrl: "https://github.com/gabrielluisnunes/Pnperformance",
   },
     
 ];
