@@ -194,7 +194,7 @@ const itemVariants = {
 
 const About: React.FC = () => {
     
-    const CV_PATH = '/docs/CV- Gabriel Luis Parede Nunes.pdf'; 
+    const CV_PATH = '/docs/CV - Gabriel Luis Parede Nunes.pdf'; 
 
     return (
         <AboutContainer 
