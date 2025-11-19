@@ -54,7 +54,7 @@ const SkillsSectionWrapper = styled.div`
     color: ${TEXT_PRIMARY_DARK};
 `;
 
-const SectionTitle = styled(motion.h2)` // Adição do motion.h2
+const SectionTitle = styled(motion.h2 as any)`
     font-size: clamp(2rem, 5vw, 3rem);
     color: ${ACCENT_COLOR};
     text-shadow: ${ACCENT_GLOW_LIGHT};
@@ -66,7 +66,7 @@ const SectionTitle = styled(motion.h2)` // Adição do motion.h2
     max-width: 1000px;
 `;
 
-const CategoryContainer = styled(motion.div)` // Adição do motion.div
+const CategoryContainer = styled(motion.div as any)`
     width: 100%;
     max-width: 1000px;
     margin-bottom: 40px;
@@ -93,7 +93,7 @@ const SkillsBadgeWrapper = styled.div`
     }
 `;
 
-const SkillBadge = styled(motion.div)` // Adição do motion.div
+const SkillBadge = styled(motion.div as any)`
     display: inline-flex;
     align-items: center;
     justify-content: center; 
@@ -122,7 +122,6 @@ const Icon = styled.div`
     line-height: 1;
 `;
 
-// Variantes de animação
 const titleVariant = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }

@@ -14,7 +14,7 @@ const TEXT_SECONDARY_DARK = '#555555';
 const CARD_BG_LIGHT = '#FFFFFF'; 
 const BORDER_COLOR_LIGHT = '#E0E0E0';
 
-const SectionTitle = styled(motion.h2)` // Adição do motion.h2
+const SectionTitle = styled(motion.h2 as any)`
     font-size: clamp(2rem, 5vw, 3rem);
     color: ${ACCENT_COLOR};
     text-shadow: ${ACCENT_GLOW_LIGHT};
@@ -27,29 +27,13 @@ const SectionTitle = styled(motion.h2)` // Adição do motion.h2
     padding: 0 5%;
 `;
 
-const ProjectsSectionWrapper = styled.div`
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 5%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: transparent;
-`;
+interface ProjectItemProps {
+    $isEven: boolean;
+}
 
-const ProjectsList = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 80px; 
-    
-    @media (max-width: 900px) {
-        gap: 60px;
-    }
-`;
-
-const ProjectItem = styled(motion.div)<{ $isEven: boolean }>` // Adição do motion.div
+const ProjectItem = styled(motion.div as any).withConfig({
+    shouldForwardProp: (prop) => !['$isEven'].includes(prop as string)
+})<ProjectItemProps>`
     display: flex;
     align-items: center;
     gap: 40px;
@@ -80,6 +64,28 @@ const ProjectItem = styled(motion.div)<{ $isEven: boolean }>` // Adição do mot
     
     @media (max-width: 600px) {
         padding: 15px;
+    }
+`;
+
+const ProjectsSectionWrapper = styled.div`
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+`;
+
+const ProjectsList = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 80px; 
+    
+    @media (max-width: 900px) {
+        gap: 60px;
     }
 `;
 
@@ -213,7 +219,6 @@ const LinkButton = styled.a`
     }
 `;
 
-// Variantes de animação
 const titleVariant = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
@@ -225,7 +230,7 @@ const projectVariant = {
         opacity: 1,
         x: 0,
         transition: {
-            delay: i * 0.1, // Atraso sequencial
+            delay: i * 0.1, 
             type: "spring",
             stiffness: 100,
             damping: 15
@@ -253,7 +258,7 @@ const ProjectsSection: React.FC = () => {
                             key={project.id} 
                             $isEven={isEven}
                             variants={projectVariant}
-                            custom={isEven ? 0 : 0.5} // Define um pequeno atraso entre as linhas
+                            custom={isEven ? 0 : 0.5} 
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.2 }}

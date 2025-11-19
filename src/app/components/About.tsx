@@ -9,14 +9,15 @@ import { motion } from 'framer-motion';
 
 const BG_PRIMARY_LIGHT = '#FFFFFF';
 const TEXT_PRIMARY_DARK = '#333333';
-const TEXT_SECONDARY_DARK = '#555555';
+const TEXT_SECONDARY_DARK = '#555555'; 
 const ACCENT_COLOR = '#00AAAA';
 const ACCENT_GLOW_LIGHT = '0 0 8px rgba(0, 170, 170, 0.3)';
 const ACCENT_GLOW_STRONG = '0 0 15px rgba(0, 170, 170, 0.5)';
 const BORDER_COLOR_LIGHT = '#E0E0E0';
 
 
-const AboutContainer = styled(motion.div)` // Adição do motion.div
+
+const AboutContainer = styled(motion.div as any)<any>`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +36,8 @@ const AboutContainer = styled(motion.div)` // Adição do motion.div
     }
 `;
 
-const ImageWrapper = styled(motion.div)` // Adição do motion.div
+
+const ImageWrapper = styled(motion.div as any)<any>`
     min-width: 300px; 
     width: 300px;
     height: 300px;
@@ -66,7 +68,8 @@ const ImageWrapper = styled(motion.div)` // Adição do motion.div
     }
 `;
 
-const BioContent = styled(motion.div)` // Adição do motion.div
+
+const BioContent = styled(motion.div as any)<any>`
     color: ${TEXT_PRIMARY_DARK};
     
     h2 {
@@ -85,7 +88,7 @@ const BioContent = styled(motion.div)` // Adição do motion.div
         font-size: 1.05rem; 
         line-height: 1.7;
         margin-bottom: 20px;
-        color: ${TEXT_SECONDARY_DARK};
+        color: ${TEXT_SECONDARY_DARK}; 
     }
     
     .cta-message {
@@ -191,7 +194,7 @@ const itemVariants = {
 
 const About: React.FC = () => {
     
-    const CV_PATH = '/docs/CV- GABRIEL LUIS PAREDE NUNES.pdf'; 
+    const CV_PATH = '/docs/CV- Gabriel Luis Parede Nunes.pdf'; 
 
     return (
         <AboutContainer 
@@ -222,7 +225,6 @@ const About: React.FC = () => {
 
                 <p>
                     Trabalho construindo plataformas profissionais de lojas virtuais a sites institucionais e sistemas web sempre com foco em performance, velocidade, usabilidade e conversão.
-                    Minhas entregas unem Web Design, UX/UI, desenvolvimento e lógica de negócios para que cada projeto gere impacto imediato e escalável.
                 </p>
 
                 <p>
@@ -235,7 +237,7 @@ const About: React.FC = () => {
                 
                 
                 <LinkContainer>
-                    <CtaButton href={CV_PATH} download="CV- Gabriel Luis Parede Nunes.pdf" target="_blank">
+                    <CtaButton href={CV_PATH} download="CV- GABRIEL LUIS PAREDE NUNES.pdf" target="_blank">
                         <FiDownload size={20} />
                         Baixar CV
                     </CtaButton>
