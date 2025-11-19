@@ -3,7 +3,10 @@
 import styled, { keyframes } from 'styled-components';
 import React from 'react';
 
-const GOLD_COLOR = '#FFD700';
+const ACCENT_COLOR = '#00AAAA';
+const TEXT_PRIMARY_DARK = '#333333';
+const TEXT_SECONDARY_DARK = '#555555';
+
 const TEXT_TO_TYPE = "Bem-vindo ao Meu Portfólio";
 const CHAR_COUNT = TEXT_TO_TYPE.length;
 
@@ -25,7 +28,7 @@ const blink = keyframes`
         border-color: transparent;
     }
     50% {
-        border-color: ${GOLD_COLOR};
+        border-color: ${ACCENT_COLOR};
     }
 `;
 
@@ -36,8 +39,8 @@ const HeroSection = styled.section`
     justify-content: center;
     height: 100vh;
     text-align: center;
-    background-color: #000000;
-    color: #ffffff;
+    background-color: transparent; 
+    color: ${TEXT_SECONDARY_DARK};
     padding: 0 5%;
     box-sizing: border-box;
     width: 100vw; 
@@ -48,7 +51,7 @@ const TypingContainer = styled.div`
     display: inline-block;
     overflow: hidden; 
     white-space: nowrap; 
-    border-right: 0.15em solid ${GOLD_COLOR}; 
+    border-right: 0.15em solid ${ACCENT_COLOR}; 
     max-width: 100%; 
     
     animation: 
@@ -61,7 +64,7 @@ const CodeLineH1 = styled.h2`
     
     
     font-size: clamp(2.5rem, 6vw, 3.5rem); 
-    color: ${GOLD_COLOR};
+    color: ${ACCENT_COLOR};
     margin: 0;
     
     
@@ -75,7 +78,7 @@ const CodeLineH1 = styled.h2`
 const SubtitleP = styled.p`
     font-family: 'monospace', 'Courier New', Courier, monospace;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
-    color: #cccccc;
+    color: ${TEXT_SECONDARY_DARK};
     margin-top: 20px;
     padding: 0 5%; 
 `;
@@ -87,9 +90,6 @@ const Hero: React.FC = () => {
             <TypingContainer>
                 <CodeLineH1>{TEXT_TO_TYPE}</CodeLineH1>
             </TypingContainer>
-            <SubtitleP>
-                Desenvolvedor Full-Stack
-            </SubtitleP>
         </HeroSection>
     );
 }

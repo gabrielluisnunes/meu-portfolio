@@ -5,69 +5,95 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
 import { FiMail, FiDownload } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
-const GOLD_COLOR = '#FFD700'; 
-const BRIGHT_GOLD = '#FFEB3B'; 
+const BG_PRIMARY_LIGHT = '#FFFFFF';
+const TEXT_PRIMARY_DARK = '#333333';
+const TEXT_SECONDARY_DARK = '#555555';
+const ACCENT_COLOR = '#00AAAA';
+const ACCENT_GLOW_LIGHT = '0 0 8px rgba(0, 170, 170, 0.3)';
+const ACCENT_GLOW_STRONG = '0 0 15px rgba(0, 170, 170, 0.5)';
+const BORDER_COLOR_LIGHT = '#E0E0E0';
 
-const AboutContainer = styled.div`
+
+const AboutContainer = styled(motion.div)` // Adição do motion.div
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
-    max-width: 900px;
+    max-width: 1200px; 
     width: 100%;
-    padding: 20px 0;
-    color: #ffffff;
+    padding: 80px 5%; 
+    color: ${TEXT_PRIMARY_DARK};
+    margin: 0 auto;
+    background-color: transparent;
 
     @media (min-width: 768px) {
         flex-direction: row;
-        gap: 60px;
-        text-align: left;
-        align-items: flex-start;
-    }
-
-    h2 {
-        color: ${BRIGHT_GOLD}; /* Título principal mais brilhante */
-        text-shadow: 0 0 5px rgba(255, 235, 59, 0.5); /* Sombra para simular brilho */
+        gap: 80px; 
+        align-items: center; 
     }
 `;
 
-const ProfilePicture = styled.div`
-    min-width: 250px;
-    height: 250px;
+const ImageWrapper = styled(motion.div)` // Adição do motion.div
+    min-width: 300px; 
+    width: 300px;
+    height: 300px;
     position: relative;
-    border-radius: 50%;
+    
+    border-radius: 15px; 
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    transition: all 0.5s ease;
+    
+    border: 3px solid ${BORDER_COLOR_LIGHT};
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1), ${ACCENT_GLOW_LIGHT}; 
+    
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     
     &:hover {
-        transform: scale(1.05);
-        /* Brilho neon na borda no hover */
-        box-shadow: 0 0 15px ${BRIGHT_GOLD}, 0 0 5px ${BRIGHT_GOLD};
+        transform: scale(1.03);
+        border-color: ${ACCENT_COLOR};
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.15), ${ACCENT_GLOW_STRONG};
+    }
+
+    img {
+        object-fit: cover; 
+    }
+
+    @media (max-width: 767px) {
+        width: 250px;
+        height: 250px;
+        min-width: 250px;
     }
 `;
 
-const BioContent = styled.div`
-    color: #cccccc;
+const BioContent = styled(motion.div)` // Adição do motion.div
+    color: ${TEXT_PRIMARY_DARK};
     
-    @media (min-width: 768px) {
-      text-align: left;
-    }
-
     h2 {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
+        font-size: clamp(2rem, 5vw, 2.8rem); 
+        margin-bottom: 25px;
         text-align: center;
+        color: ${ACCENT_COLOR};
+        text-shadow: ${ACCENT_GLOW_LIGHT};
+        line-height: 1.2;
         
         @media (min-width: 768px) {
             text-align: left;
         }
     }
     p {
-        font-size: 1.1rem;
-        line-height: 1.6;
-        margin-bottom: 15px;
+        font-size: 1.05rem; 
+        line-height: 1.7;
+        margin-bottom: 20px;
+        color: ${TEXT_SECONDARY_DARK};
+    }
+    
+    .cta-message {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: ${ACCENT_COLOR};
+        margin-top: 10px;
+        text-shadow: 0 0 3px rgba(0, 170, 170, 0.4);
     }
 `;
 
@@ -75,7 +101,7 @@ const LinkContainer = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 30px; 
     margin-top: 35px;
 
     @media (min-width: 768px) {
@@ -83,108 +109,150 @@ const LinkContainer = styled.div`
     }
 `;
 
-
-const SocialLink = styled.a`
-    display: inline-flex; /* Permite alinhar o ícone e o texto */
+const SocialLinks = styled.div`
+    display: flex;
+    gap: 15px; 
     align-items: center;
-    gap: 8px; /* Espaçamento entre o ícone e o texto */
-    
-    color: ${GOLD_COLOR};
-    background-color: transparent;
-    border: 2px solid ${GOLD_COLOR};
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    
-    &:hover {
-        color: #000; 
-        background-color: ${BRIGHT_GOLD};
-        border-color: ${BRIGHT_GOLD};
-        transform: translateY(-2px);
-        box-shadow: 0 0 10px ${BRIGHT_GOLD}; 
-    }
 `;
 
 const SocialLinkIcon = styled.a`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px; 
-    height: 50px;
-    color: ${GOLD_COLOR};
+    width: 45px; 
+    height: 45px;
+    color: ${ACCENT_COLOR};
     background-color: transparent;
-    border: 2px solid ${GOLD_COLOR};
+    border: 2px solid ${ACCENT_COLOR};
     border-radius: 50%;
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     transition: all 0.3s ease;
 
     &:hover {
-        color: #000;
-        background-color: ${BRIGHT_GOLD};
-        border-color: ${BRIGHT_GOLD};
-        transform: translateY(-2px);
-        box-shadow: 0 0 10px ${BRIGHT_GOLD}; 
+        color: ${BG_PRIMARY_LIGHT};
+        background-color: ${ACCENT_COLOR};
+        border-color: ${ACCENT_COLOR};
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 170, 170, 0.5); 
     }
 `;
+
+const CtaButton = styled.a`
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    
+    color: ${BG_PRIMARY_LIGHT}; 
+    background-color: ${ACCENT_COLOR}; 
+    border: 2px solid ${ACCENT_COLOR};
+    
+    padding: 12px 28px; 
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        color: ${ACCENT_COLOR};
+        background-color: transparent;
+        border-color: ${ACCENT_COLOR};
+        transform: translateY(-3px);
+        box-shadow: 0 0 15px rgba(0, 170, 170, 0.5);
+    }
+`;
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            delayChildren: 0.3,
+            staggerChildren: 0.2
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            type: "spring",
+            stiffness: 100,
+            damping: 15
+        }
+    }
+};
+
 
 const About: React.FC = () => {
     
     const CV_PATH = '/docs/CV- GABRIEL LUIS PAREDE NUNES.pdf'; 
 
     return (
-        <AboutContainer>
+        <AboutContainer 
+            id="sobre"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+        >
             
-            <ProfilePicture>
+            <ImageWrapper variants={itemVariants}>
                 <Image 
-                    src="/images/Gabriel.png" 
+                    src="/images/FotoGabriel.jpeg" 
                     alt="Foto de Perfil do Gabriel" 
                     fill 
                     style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 768px) 100vw, 250px"
+                    sizes="(max-width: 768px) 250px, 300px"
                 />
-            </ProfilePicture>
+            </ImageWrapper>
             
-            <BioContent>
+            <BioContent variants={itemVariants}>
                 <h2>Olá! Eu sou Gabriel Luis Parede Nunes.</h2>
                 
                 <p>
-                  Desenvolvedor Full-Stack focado em construir soluções digitais robustas, elegantes e de alto desempenho.
+                    Sou especialista em criação de interfaces e desenvolvimento de soluções digitais que impulsionam negócios por meio de sites estratégicos, e-commerces de alta conversão e sistemas completos.
+                    Combinando design, experiência do usuário e tecnologia, já ajudei diversas empresas a transformarem sua presença digital em ativo real de vendas.
+                </p>
 
-                  Minha abordagem ao desenvolvimento é profundamente influenciada pelo meu hobby de mais de 10 anos: o Jiu-Jitsu. No tatame, aprendi que a vitória não está na força bruta, mas sim na estratégia, na persistência e na adaptabilidade contínua.
+                <p>
+                    Trabalho construindo plataformas profissionais de lojas virtuais a sites institucionais e sistemas web sempre com foco em performance, velocidade, usabilidade e conversão.
+                    Minhas entregas unem Web Design, UX/UI, desenvolvimento e lógica de negócios para que cada projeto gere impacto imediato e escalável.
+                </p>
 
-                  Essa mesma mentalidade se traduz diretamente para a programação: busco a técnica mais eficiente para cada desafio, dedicando-me à maestria do código e à solução de problemas com precisão. Seja no Front-end com o dinamismo do React/Next.js ou no Back-end com a fundação sólida de Node.js e arquitetura de dados.
+                <p>
+                    Atuo à frente de projetos utilizando WordPress, Elementor, WooCommerce, Figma, React, Next.js e Spring Boot, criando soluções personalizadas, rápidas e funcionais para empresas que buscam crescer com consistência, atrair mais clientes e fortalecer sua marca no digital.
+                </p>
 
-                  Meu foco é simples: Entregar projetos que não apenas atendam às expectativas, mas as superem, aplicando a mesma disciplina e foco que me guiam dentro e fora do código.
+                <p>
+                    Meu objetivo é claro: transformar ideias em produtos digitais de alto desempenho, que geram valor, credibilidade e resultados reais todos os dias.
                 </p>
                 
-                <p style={{ fontWeight: 600, color: BRIGHT_GOLD }}>
-                    Vamos criar algo incrível juntos?
-                </p>
                 
                 <LinkContainer>
-                    {}
-                    <SocialLinkIcon href="https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/" target="_blank">
-                        <FaLinkedinIn />
-                    </SocialLinkIcon>
-                    
-                    {}
-                    <SocialLinkIcon href="https://github.com/gabrielluisnunes" target="_blank">
-                        <FaGithub />
-                    </SocialLinkIcon>
-
-                    {}
-                    <SocialLinkIcon href="mailto:gabrielluisnunes@gmail.com" target="_blank">
-                        <FiMail />
-                    </SocialLinkIcon>
-
-                    {}
-                    <SocialLink href={CV_PATH} download="CV- GABRIEL LUIS PAREDE NUNES.pdf" target="_blank">
+                    <CtaButton href={CV_PATH} download="CV- Gabriel Luis Parede Nunes.pdf" target="_blank">
                         <FiDownload size={20} />
-                        Download CV
-                    </SocialLink>
+                        Baixar CV
+                    </CtaButton>
+
+                    <SocialLinks>
+                        <SocialLinkIcon href="https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/" target="_blank" aria-label="LinkedIn">
+                            <FaLinkedinIn />
+                        </SocialLinkIcon>
+                        
+                        <SocialLinkIcon href="https://github.com/gabrielluisnunes" target="_blank" aria-label="GitHub">
+                            <FaGithub />
+                        </SocialLinkIcon>
+
+                        <SocialLinkIcon href="mailto:gabrielluisnunes@gmail.com" aria-label="Email">
+                            <FiMail />
+                        </SocialLinkIcon>
+                    </SocialLinks>
                 </LinkContainer>
                 
             </BioContent>

@@ -1,259 +1,186 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import { 
-    FaHtml5, 
-    FaCss3Alt, 
-    FaJs, 
-    FaReact, 
-    FaNodeJs, 
-    FaGitAlt, 
-    FaServer,
-    FaJava
+    FaHtml5, FaCss3Alt, FaJs, FaReact, FaNodeJs, FaGitAlt, FaServer, FaJava
 } from 'react-icons/fa';
 import { 
-    SiNextdotjs, 
-    SiTypescript, 
-    SiStyledcomponents, 
-    SiPrisma 
+    SiNextdotjs, SiTypescript, SiStyledcomponents, SiPrisma 
 } from 'react-icons/si';
 
 
-const GOLD_COLOR = '#FFD700'; 
-const BRIGHT_GOLD = '#FFEB3B'; 
-const CARD_BG = 'rgba(10, 10, 10, 0.8)'; 
+const TEXT_PRIMARY_DARK = '#333333';
+const ACCENT_COLOR = '#00AAAA';
+const ACCENT_GLOW_LIGHT = '0 0 5px rgba(0, 170, 170, 0.4)';
+const CARD_BG_LIGHT = '#FFFFFF'; 
+const BORDER_COLOR_LIGHT = '#E0E0E0';
 
 
-const skillsData = [
-    { name: 'HTML5', icon: FaHtml5, color: '#E34F26' },
-    { name: 'CSS3', icon: FaCss3Alt, color: '#1572B6' },
-    { name: 'JavaScript', icon: FaJs, color: '#F7DF1E' },
-    { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
-    { name: 'React', icon: FaReact, color: '#61DAFB' },
-    { name: 'Next.js', icon: SiNextdotjs, color: '#000000' },
-    { name: 'Styled Components', icon: SiStyledcomponents, color: '#DB7093' },
-    { name: 'Node.js', icon: FaNodeJs, color: '#339933' },
-    { name: 'Prisma ORM', icon: SiPrisma, color: '#2D3748' },
-    { name: 'Git', icon: FaGitAlt, color: '#F05032' },
-    { name: 'SQL/Databases', icon: FaServer, color: '#00758F' },
-    { name: 'Java', icon: FaJava, color: '#007396' },
-    { name: 'APIs RESTful', icon: FaServer, color: '#FF6F61' },
-];
-
+const skillsData = {
+    'Front-end': [
+        { name: 'React', icon: FaReact, color: '#61DAFB' },
+        { name: 'Next.js', icon: SiNextdotjs, color: TEXT_PRIMARY_DARK },
+        { name: 'TypeScript', icon: SiTypescript, color: '#3178C6' },
+        { name: 'JavaScript', icon: FaJs, color: '#F7DF1E' },
+        { name: 'HTML5', icon: FaHtml5, color: '#E34F26' },
+        { name: 'CSS3', icon: FaCss3Alt, color: '#1572B6' },
+        { name: 'Styled Components', icon: SiStyledcomponents, color: '#DB7093' },
+    ],
+    'Back-end & Databases': [
+        { name: 'Node.js', icon: FaNodeJs, color: '#339933' },
+        { name: 'Java', icon: FaJava, color: '#007396' },
+        { name: 'Prisma ORM', icon: SiPrisma, color: TEXT_PRIMARY_DARK },
+        { name: 'APIs RESTful', icon: FaServer, color: ACCENT_COLOR },
+        { name: 'SQL/Databases', icon: FaServer, color: '#00758F' },
+    ],
+    'Ferramentas & Outros': [
+        { name: 'Git', icon: FaGitAlt, color: '#F05032' },
+        { name: 'Servidores', icon: FaServer, color: TEXT_PRIMARY_DARK },
+    ],
+};
 
 const SkillsSectionWrapper = styled.div`
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 40px;
+    padding: 60px 5%;
+    margin: 0 auto;
+    background-color: transparent;
+    color: ${TEXT_PRIMARY_DARK};
 `;
 
-const SkillsGrid = styled.div<{ $isMobile: boolean }>`
+const SectionTitle = styled(motion.h2)` // Adição do motion.h2
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: ${ACCENT_COLOR};
+    text-shadow: ${ACCENT_GLOW_LIGHT};
+    margin-bottom: 50px;
+    text-align: center;
+    border-bottom: 3px solid ${ACCENT_COLOR};
+    padding-bottom: 10px;
     width: 100%;
     max-width: 1000px;
+`;
+
+const CategoryContainer = styled(motion.div)` // Adição do motion.div
+    width: 100%;
+    max-width: 1000px;
+    margin-bottom: 40px;
+`;
+
+const CategoryTitle = styled.h3`
+    font-size: 1.8rem;
+    color: ${TEXT_PRIMARY_DARK};
+    margin-bottom: 25px;
+    padding-left: 10px;
+    border-left: 5px solid ${ACCENT_COLOR};
+    text-shadow: 0 0 2px rgba(0, 170, 170, 0.3);
+`;
+
+const SkillsBadgeWrapper = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-    padding: 0 20px;
-
-    ${({ $isMobile }) => $isMobile && css`
-        display: flex;
-        overflow-x: auto;
-        overflow-y: hidden;
-        
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        &::-webkit-scrollbar {
-            display: none;
-        }
-        
-        scroll-snap-type: x mandatory;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    gap: 15px;
+    width: 100%;
+    
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
         gap: 20px;
-        flex-wrap: nowrap;
-        padding: 0 5%;
-        width: 100%;
-        box-sizing: border-box;
-        scroll-padding-left: 5%; 
-    `}
+    }
 `;
 
-const SkillCard = styled.div`
-    background-color: ${CARD_BG};
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+const SkillBadge = styled(motion.div)` // Adição do motion.div
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    min-height: 150px;
-
-    &:hover {
-        transform: translateY(-5px) scale(1.05);
-        border-color: ${GOLD_COLOR};
-        box-shadow: 0 0 15px ${BRIGHT_GOLD}, 0 10px 20px rgba(0, 0, 0, 0.5);
-    }
-    
-    @media (max-width: 768px) {
-        min-width: 200px;
-        scroll-snap-align: center;
-        flex-shrink: 0; 
-        
-        &:hover {
-             transform: translateY(0);
-        }
-    }
-`;
-
-const SkillIcon = styled.div`
-    font-size: 2rem;
-    color: ${GOLD_COLOR};
-    margin-bottom: 10px;
-    transition: color 0.3s ease;
-
-    ${SkillCard}:hover & {
-        color: ${BRIGHT_GOLD};
-        filter: drop-shadow(0 0 5px ${BRIGHT_GOLD});
-    }
-`;
-
-const SkillName = styled.p`
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #ffffff;
-    
-    ${SkillCard}:hover & {
-        color: ${BRIGHT_GOLD};
-    }
-`;
-
-const IndicatorContainer = styled.div`
-    display: none;
-    justify-content: center;
-    margin-top: 30px;
+    justify-content: center; 
     gap: 8px;
-
-    @media (max-width: 768px) {
-        display: flex;
+    background-color: ${CARD_BG_LIGHT};
+    color: ${TEXT_PRIMARY_DARK};
+    padding: 12px 15px; 
+    border-radius: 5px;
+    border: 1px solid ${BORDER_COLOR_LIGHT};
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: default;
+    transition: all 0.3s ease;
+    
+    &:hover {
+        border-color: ${ACCENT_COLOR};
+        color: ${ACCENT_COLOR};
+        transform: translateY(-2px); 
+        box-shadow: 0 0 10px rgba(0, 170, 170, 0.4), 0 3px 8px rgba(0, 0, 0, 0.1);
+        background-color: #F5F5F5;
     }
 `;
 
-const IndicatorDot = styled.span<{ $isActive: boolean }>`
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: ${({ $isActive }) => ($isActive ? BRIGHT_GOLD : '#555')};
-    transition: background-color 0.3s, box-shadow 0.3s;
-    border: 1px solid ${({ $isActive }) => ($isActive ? BRIGHT_GOLD : '#555')};
-    
-    ${({ $isActive }) => $isActive && css`
-        box-shadow: 0 0 5px ${BRIGHT_GOLD};
-    `}
+const Icon = styled.div`
+    font-size: 1.2rem;
+    line-height: 1;
 `;
+
+// Variantes de animação
+const titleVariant = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
+
+const categoryVariant = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+        opacity: 1, 
+        y: 0, 
+        transition: { 
+            type: "spring", 
+            stiffness: 100, 
+            damping: 15,
+            delayChildren: 0.2,
+            staggerChildren: 0.05
+        } 
+    }
+};
+
+const badgeVariant = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 }
+};
 
 
 const SkillsSection: React.FC = () => {
-    const gridRef = useRef<HTMLDivElement>(null);
-    const [activeIndicator, setActiveIndicator] = useState(0);
-    const isClient = typeof window !== 'undefined';
-    const [isMobile, setIsMobile] = useState(false);
-    const INDICATOR_COUNT = 3;
-
-    useEffect(() => {
-        if (isClient) {
-            const checkMobile = () => {
-                setIsMobile(window.innerWidth <= 768);
-            };
-            checkMobile();
-            window.addEventListener('resize', checkMobile);
-            return () => window.removeEventListener('resize', checkMobile);
-        }
-    }, [isClient]);
-
-    useEffect(() => {
-        if (!gridRef.current || !isMobile) return;
-
-        const container = gridRef.current;
-        
-        const updateIndicator = () => {
-            const scrollLeft = container.scrollLeft;
-            const scrollWidth = container.scrollWidth - container.clientWidth;
-
-            if (scrollWidth === 0) return; 
-
-            // Calcula a porcentagem de rolagem (0 a 1)
-            const scrollProgress = scrollLeft / scrollWidth;
-            
-            // Lógica dos 3 indicadores
-            if (scrollProgress < 0.33) {
-                setActiveIndicator(0); // Início
-            } else if (scrollProgress < 0.66) {
-                setActiveIndicator(1); // Meio
-            } else {
-                setActiveIndicator(2); // Fim
-            }
-        };
-
-        container.addEventListener('scroll', updateIndicator);
-        updateIndicator(); 
-
-        return () => container.removeEventListener('scroll', updateIndicator);
-    }, [isMobile]);
-
-    const handleDotClick = (index: number) => {
-        if (gridRef.current) {
-            const container = gridRef.current;
-            const scrollWidth = container.scrollWidth - container.clientWidth;
-            let targetScrollLeft = 0;
-
-            if (index === 0) {
-                targetScrollLeft = 0; 
-            } else if (index === 1) {
-                targetScrollLeft = scrollWidth * 0.5; 
-            } else if (index === 2) {
-                targetScrollLeft = scrollWidth; 
-            }
-            
-            container.scrollTo({
-                left: targetScrollLeft,
-                behavior: 'smooth',
-            });
-            setActiveIndicator(index);
-        }
-    };
 
     return (
-        <SkillsSectionWrapper>
-            <SkillsGrid ref={gridRef} $isMobile={isMobile}>
-                {skillsData.map((skill) => (
-                    <SkillCard key={skill.name}>
-                        <SkillIcon as={skill.icon} />
-                        <SkillName>{skill.name}</SkillName>
-                    </SkillCard>
-                ))}
-            </SkillsGrid>
+        <SkillsSectionWrapper id="habilidades">
+            <SectionTitle
+                variants={titleVariant}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
+            >
+                Minhas Habilidades Técnicas
+            </SectionTitle>
             
-            {isMobile && (
-                <IndicatorContainer>
-                    {Array.from({ length: INDICATOR_COUNT }).map((_, index) => (
-                        <IndicatorDot 
-                            key={index} 
-                            $isActive={index === activeIndicator}
-                            onClick={() => handleDotClick(index)}
-                        />
-                    ))}
-                </IndicatorContainer>
-            )}
+            {Object.entries(skillsData).map(([category, skills]) => (
+                <CategoryContainer 
+                    key={category}
+                    variants={categoryVariant}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                >
+                    <CategoryTitle>{category}</CategoryTitle>
+                    <SkillsBadgeWrapper>
+                        {skills.map((skill) => (
+                            <SkillBadge key={skill.name} variants={badgeVariant}>
+                                <Icon as={skill.icon} style={{ color: skill.color }} />
+                                {skill.name}
+                            </SkillBadge>
+                        ))}
+                    </SkillsBadgeWrapper>
+                </CategoryContainer>
+            ))}
         </SkillsSectionWrapper>
     );
 };

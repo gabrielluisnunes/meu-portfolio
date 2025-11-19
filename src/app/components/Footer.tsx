@@ -2,79 +2,93 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
-import { FaLinkedinIn, FaGithub } from 'react-icons/fa';
-import { FiMail } from 'react-icons/fi';
 
-const GOLD_COLOR = '#FFD700'; 
-const BRIGHT_GOLD = '#FFEB3B'; 
+const ACCENT_COLOR = '#00AAAA'; 
+const ACCENT_GLOW_LIGHT = '0 0 4px rgba(0, 170, 170, 0.3)';
+const TEXT_SECONDARY_DARK = '#555555';
+const BORDER_COLOR_LIGHT = '#E0E0E0';
+const FOOTER_BG_LIGHT = 'rgba(250, 250, 250, 0.9)'; 
 
-const FooterContainer = styled.footer`
+
+const socialLinks = {
+    github: 'https://github.com/gabrielluisnunes', 
+    linkedin: 'https://www.linkedin.com/in/gabriel-luis-parede-nunes-b62724235/', 
+    email: 'mailto:gabrielluisnunes@gmail.com', 
+};
+
+const FooterWrapper = styled.footer`
     width: 100%;
-    background-color: #000000;
-    color: #cccccc;
-    /* 🚨 TAMANHO REDUZIDO AQUI */
-    padding: 20px 5%; 
+    background-color: ${FOOTER_BG_LIGHT};
+    border-top: 1px solid ${BORDER_COLOR_LIGHT}; 
+    padding: 30px 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-top: 1px solid rgba(255, 215, 0, 0.1); 
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
 `;
 
 const SocialLinks = styled.div`
     display: flex;
-    gap: 20px;
+    gap: 30px;
     margin-bottom: 20px;
 `;
 
-const SocialLinkIcon = styled.a`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px; 
-    height: 45px;
-    color: ${GOLD_COLOR};
-    background-color: transparent;
-    border: 2px solid ${GOLD_COLOR};
-    border-radius: 50%;
-    text-decoration: none;
+const LinkIcon = styled.a`
+    color: ${ACCENT_COLOR};
     font-size: 1.5rem;
     transition: all 0.3s ease;
-
-    &:hover {
-        color: #000;
-        background-color: ${BRIGHT_GOLD};
-        border-color: ${BRIGHT_GOLD};
-        transform: translateY(-2px);
-        box-shadow: 0 0 10px ${BRIGHT_GOLD}; 
-    }
-`;
-
-const CopyrightText = styled.p`
-    font-size: 0.9rem;
-    color: #999999;
-    margin-top: 10px;
     
-    strong {
-        color: ${GOLD_COLOR};
-        font-weight: 600;
+    &:hover {
+        color: ${ACCENT_COLOR};
+        transform: translateY(-3px) scale(1.1);
+        text-shadow: ${ACCENT_GLOW_LIGHT};
     }
 `;
+
+const FooterText = styled.p`
+    font-size: 0.85rem;
+    color: ${TEXT_SECONDARY_DARK};
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+`;
+
+const StyledSeparator = styled.div`
+    width: 80px;
+    height: 2px;
+    background-color: ${ACCENT_COLOR};
+    margin: 15px 0;
+    box-shadow: ${ACCENT_GLOW_LIGHT};
+`;
+
 
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
     
     return (
-        <FooterContainer>
-           
-            <CopyrightText>
-                &copy; {currentYear} Gabriel Luis. Todos os direitos reservados.
-            </CopyrightText>
-            <CopyrightText>
-                Desenvolvido com <strong>Next.js</strong> e <strong>Styled Components</strong>.
-            </CopyrightText>
-        </FooterContainer>
+        <FooterWrapper>
+            
+            <SocialLinks>
+                <LinkIcon href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                    <FaLinkedin />
+                </LinkIcon>
+                <LinkIcon href={socialLinks.github} target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <FaGithub />
+                </LinkIcon>
+                <LinkIcon href={socialLinks.email} title="E-mail">
+                    <FaEnvelope />
+                </LinkIcon>
+            </SocialLinks>
+
+            <StyledSeparator />
+            
+            <FooterText>
+                &copy; {currentYear} Todos os direitos reservados.
+            </FooterText>
+            
+        </FooterWrapper>
     );
 };
 

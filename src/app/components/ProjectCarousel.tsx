@@ -1,328 +1,302 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
 import Image from 'next/image'; 
 import { Project, projects } from '@/data/projectData'; 
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa'; 
+import { motion } from 'framer-motion';
 
-const GOLD_COLOR = '#FFD700'; 
-const BRIGHT_GOLD = '#FFEB3B'; 
-const CARD_BG = '#101010'; 
+const ACCENT_COLOR = '#00AAAA'; 
+const ACCENT_GLOW_LIGHT = '0 0 5px rgba(0, 170, 170, 0.4)';
+const TEXT_PRIMARY_DARK = '#333333';
+const TEXT_SECONDARY_DARK = '#555555';
+const CARD_BG_LIGHT = '#FFFFFF'; 
+const BORDER_COLOR_LIGHT = '#E0E0E0';
+
+const SectionTitle = styled(motion.h2)` // Adição do motion.h2
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: ${ACCENT_COLOR};
+    text-shadow: ${ACCENT_GLOW_LIGHT};
+    margin-bottom: 70px;
+    text-align: center;
+    border-bottom: 3px solid ${ACCENT_COLOR};
+    padding-bottom: 10px;
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 5%;
+`;
 
 const ProjectsSectionWrapper = styled.div`
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px 0;
+    padding: 60px 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: transparent;
 `;
 
-const ProjectsGrid = styled.div<{ $isMobile: boolean }>`
+const ProjectsList = styled.div`
     width: 100%;
-    max-width: 1200px;
-    padding: 0 0; 
-    margin: 0 auto;
-    
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    padding: 0 5%;
-
-    ${({ $isMobile }) => $isMobile && css`
-        display: flex;
-        overflow-x: scroll; 
-        overflow-y: hidden;
-        
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        &::-webkit-scrollbar {
-            display: none;
-        }
-        
-        scroll-snap-type: x mandatory;
-        gap: 30px; 
-        flex-wrap: nowrap;
-        
-        
-        padding: 0 5%; 
-        
-        width: 100%;
-        box-sizing: border-box;
-        
-        
-        scroll-padding-left: 50vw; 
-        scroll-padding-left: 5%; 
-        
-        
-    `}
-`;
-
-const ProjectCard = styled.div`
-    background-color: ${CARD_BG};
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-    transition: all 0.4s ease;
-    cursor: pointer;
-    border: 1px solid #333; 
-    
-    &:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 15px ${BRIGHT_GOLD};
-        border-color: ${GOLD_COLOR};
-    }
-
-    @media (max-width: 768px) {
-        min-width: 80vw;
-        max-width: 80vw; 
-        
-        
-        scroll-snap-align: center;
-        flex-shrink: 0; 
-
-        &:hover {
-             transform: translateY(0); 
-        }
-    }
-`;
-
-const StyledImageWrapper = styled.div`
-    position: relative;
-    width: 100%;
-    height: 220px; 
-    background-color: #000;
-    
-    img {
-        object-fit: cover; 
-    }
-`;
-
-const CardContent = styled.div`
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: 180px;
+    gap: 80px; 
+    
+    @media (max-width: 900px) {
+        gap: 60px;
+    }
+`;
+
+const ProjectItem = styled(motion.div)<{ $isEven: boolean }>` // Adição do motion.div
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    background-color: ${CARD_BG_LIGHT};
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 30px;
+    border: 1px solid ${BORDER_COLOR_LIGHT};
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    
+    flex-direction: ${({ $isEven }) => ($isEven ? 'row' : 'row-reverse')};
+
+    &:hover {
+        border-color: ${ACCENT_COLOR};
+        box-shadow: 0 0 15px rgba(0, 170, 170, 0.3), 0 10px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+    }
+    
+    @media (max-width: 900px) {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        transform: translateY(0) !important;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        border-color: ${BORDER_COLOR_LIGHT};
+    }
+    
+    @media (max-width: 600px) {
+        padding: 15px;
+    }
+`;
+
+const ImageContainer = styled.div`
+    position: relative;
+    flex: 1 1 50%;
+    height: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid ${BORDER_COLOR_LIGHT};
+    
+    img {
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    ${ProjectItem}:hover & {
+        border-color: ${ACCENT_COLOR};
+    }
+    
+    ${ProjectItem}:hover & img {
+        transform: scale(1.05);
+    }
+
+    @media (max-width: 900px) {
+        width: 100%;
+        height: 200px;
+        flex: auto;
+    }
+`;
+
+const ContentContainer = styled.div`
+    flex: 1 1 50%;
+    padding: 10px 0;
+    
+    ${ProjectItem}:nth-child(even) & {
+        text-align: right;
+    }
+
+    @media (max-width: 900px) {
+        text-align: left !important;
+        padding: 0;
+    }
 `;
 
 const ProjectTitle = styled.h3`
-    font-size: 1.5rem;
-    color: ${BRIGHT_GOLD}; 
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    color: ${ACCENT_COLOR}; 
+    margin-bottom: 15px;
     font-weight: 700;
-    text-shadow: 0 0 3px rgba(255, 235, 59, 0.3);
+    text-shadow: 0 0 5px rgba(0, 170, 170, 0.3);
+    
+    @media (max-width: 600px) {
+        font-size: 1.5rem;
+    }
 `;
 
 const ProjectDescription = styled.p`
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #cccccc;
-    margin-bottom: 15px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: ${TEXT_SECONDARY_DARK};
+    margin-bottom: 20px;
+    font-weight: 300;
+    
+    text-align: left !important;
+    
+    @media (max-width: 600px) {
+        font-size: 0.95rem;
+    }
 `;
 
-const TechContainer = styled.div`
-    margin-top: 10px;
-    margin-bottom: 15px;
+const TechContainer = styled.div<{ $isEven: boolean }>`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    
+    ${({ $isEven }) => $isEven && css`
+        justify-content: flex-end;
+    `}
+
+    @media (max-width: 900px) {
+        justify-content: flex-start;
+    }
 `;
 
 const TechTag = styled.span`
     display: inline-block;
-    background-color: transparent;
-    color: ${GOLD_COLOR};
-    border: 1px solid ${GOLD_COLOR};
-    padding: 4px 10px;
+    background-color: rgba(0, 170, 170, 0.1);
+    color: ${ACCENT_COLOR};
+    border: 1px solid ${ACCENT_COLOR};
+    padding: 6px 12px;
     border-radius: 4px;
-    font-size: 0.75rem;
-    margin: 5px 4px 0 0; 
+    font-size: 0.8rem;
     font-weight: 500;
 `;
 
-const ProjectLinks = styled.div`
+const ProjectLinks = styled.div<{ $isEven: boolean }>`
     display: flex;
-    gap: 15px;
-    margin-top: 15px; 
-    justify-content: flex-start;
+    gap: 20px;
+    
+    ${({ $isEven }) => $isEven && css`
+        justify-content: flex-end;
+    `}
+
+    @media (max-width: 900px) {
+        justify-content: flex-start;
+    }
 `;
 
 const LinkButton = styled.a`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px; 
-    height: 40px;
-    color: ${GOLD_COLOR};
+    width: 45px; 
+    height: 45px;
+    color: ${ACCENT_COLOR};
     background-color: transparent;
-    border: 2px solid ${GOLD_COLOR};
-    border-radius: 6px;
-    font-size: 1.1rem;
+    border: 2px solid ${ACCENT_COLOR};
+    border-radius: 50%;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
 
     &:hover {
-        color: #000;
-        background-color: ${BRIGHT_GOLD};
-        border-color: ${BRIGHT_GOLD};
-        box-shadow: 0 0 8px ${BRIGHT_GOLD}; 
+        color: #FFFFFF;
+        background-color: ${ACCENT_COLOR};
+        border-color: ${ACCENT_COLOR};
+        box-shadow: 0 0 12px rgba(0, 170, 170, 0.5); 
+        transform: scale(1.1);
     }
 `;
 
-const IndicatorContainer = styled.div`
-    display: none;
-    justify-content: center;
-    margin-top: 30px;
-    gap: 8px;
+// Variantes de animação
+const titleVariant = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+};
 
-    @media (max-width: 768px) {
-        display: flex;
-    }
-`;
-
-const IndicatorDot = styled.span<{ $isActive: boolean }>`
-    display: block;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    background-color: ${({ $isActive }) => ($isActive ? BRIGHT_GOLD : '#555')};
-    transition: background-color 0.3s, box-shadow 0.3s;
-    border: 1px solid ${({ $isActive }) => ($isActive ? BRIGHT_GOLD : '#555')};
-    
-    ${({ $isActive }) => $isActive && css`
-        box-shadow: 0 0 5px ${BRIGHT_GOLD};
-    `}
-`;
+const projectVariant = {
+    hidden: { opacity: 0, x: 50 },
+    visible: (i: number) => ({
+        opacity: 1,
+        x: 0,
+        transition: {
+            delay: i * 0.1, // Atraso sequencial
+            type: "spring",
+            stiffness: 100,
+            damping: 15
+        }
+    })
+};
 
 
 const ProjectsSection: React.FC = () => {
-    const gridRef = useRef<HTMLDivElement>(null);
-    const [activeIndicator, setActiveIndicator] = useState(0);
-    const isClient = typeof window !== 'undefined';
-    const [isMobile, setIsMobile] = useState(false);
-    const INDICATOR_COUNT = 3;
-
-    useEffect(() => {
-        if (isClient) {
-            const checkMobile = () => {
-                setIsMobile(window.innerWidth <= 768);
-            };
-            checkMobile();
-            window.addEventListener('resize', checkMobile);
-            return () => window.removeEventListener('resize', checkMobile);
-        }
-    }, [isClient]);
-
-    
-    useEffect(() => {
-        if (!gridRef.current || !isMobile) return;
-
-        const container = gridRef.current;
-        
-        const updateIndicator = () => {
-            const scrollLeft = container.scrollLeft;
-            const scrollWidth = container.scrollWidth - container.clientWidth;
-
-            if (scrollWidth <= 0) return; 
-
-            const scrollProgress = scrollLeft / scrollWidth;
-            
-            if (scrollProgress < 0.33) {
-                setActiveIndicator(0); 
-            } else if (scrollProgress < 0.66) {
-                setActiveIndicator(1); 
-            } else {
-                setActiveIndicator(2); 
-            }
-        };
-
-        container.addEventListener('scroll', updateIndicator);
-        updateIndicator(); 
-
-        return () => container.removeEventListener('scroll', updateIndicator);
-    }, [isMobile]);
-
-    const handleDotClick = (index: number) => {
-        if (gridRef.current) {
-            const container = gridRef.current;
-         
-            const scrollWidth = container.scrollWidth - container.clientWidth;
-            let targetScrollLeft = 0;
-
-            if (index === 0) {
-                targetScrollLeft = 0; 
-            } else if (index === 1) {
-                targetScrollLeft = scrollWidth * 0.5; 
-            } else if (index === 2) {
-                targetScrollLeft = scrollWidth; 
-            }
-            
-            container.scrollTo({
-                left: targetScrollLeft,
-                behavior: 'smooth',
-            });
-            setActiveIndicator(index);
-        }
-    };
-
     return (
-        <ProjectsSectionWrapper>
-            <ProjectsGrid ref={gridRef} $isMobile={isMobile}>
-                {projects.map((project: Project) => (
-                    <ProjectCard key={project.id}>
-                        <StyledImageWrapper>
-                            <Image 
-                                src={project.imageUrl} 
-                                alt={project.title} 
-                                fill 
-                                sizes="(max-width: 768px) 80vw, 300px"
-                            />
-                        </StyledImageWrapper>
-                        
-                        <CardContent>
-                            <div>
+        <ProjectsSectionWrapper id="projetos">
+            <SectionTitle
+                variants={titleVariant}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.5 }}
+            >
+                Projetos em Destaque
+            </SectionTitle>
+            <ProjectsList>
+                {projects.map((project: Project, index) => {
+                    const isEven = index % 2 === 0;
+                    return (
+                        <ProjectItem 
+                            key={project.id} 
+                            $isEven={isEven}
+                            variants={projectVariant}
+                            custom={isEven ? 0 : 0.5} // Define um pequeno atraso entre as linhas
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.2 }}
+                        >
+                            <ImageContainer>
+                                <Image 
+                                    src={project.imageUrl} 
+                                    alt={project.title} 
+                                    fill 
+                                    sizes="(max-width: 900px) 100vw, 50vw"
+                                />
+                            </ImageContainer>
+                            
+                            <ContentContainer>
                                 <ProjectTitle>{project.title}</ProjectTitle>
                                 <ProjectDescription>{project.description}</ProjectDescription>
                                 
-                                <TechContainer>
+                                <TechContainer $isEven={isEven}>
                                     {project.techs.map(tech => (
                                         <TechTag key={tech}>{tech}</TechTag>
                                     ))}
                                 </TechContainer>
-                            </div>
-                            
-                            <ProjectLinks>
-                                <LinkButton href={project.projectUrl} target="_blank" rel="noopener noreferrer" title="Ver Projeto Online">
-                                    <FaExternalLinkAlt />
-                                </LinkButton>
                                 
-                                <LinkButton href={project.githubUrl} target="_blank" rel="noopener noreferrer" title="Ver Código no GitHub">
-                                    <FaGithub />
-                                </LinkButton>
-                            </ProjectLinks>
-                        </CardContent>
-                    </ProjectCard>
-                ))}
-            </ProjectsGrid>
-            
-            {isMobile && (
-                <IndicatorContainer>
-                    {Array.from({ length: INDICATOR_COUNT }).map((_, index) => (
-                        <IndicatorDot 
-                            key={index} 
-                            $isActive={index === activeIndicator}
-                            onClick={() => handleDotClick(index)}
-                        />
-                    ))}
-                </IndicatorContainer>
-            )}
+                                <ProjectLinks $isEven={isEven}>
+                                    {project.projectUrl && (
+                                        <LinkButton href={project.projectUrl} target="_blank" rel="noopener noreferrer" title="Ver Projeto Online">
+                                            <FaExternalLinkAlt />
+                                        </LinkButton>
+                                    )}
+                                    
+                                    {project.githubUrl && (
+                                        <LinkButton href={project.githubUrl} target="_blank" rel="noopener noreferrer" title="Ver Código no GitHub">
+                                            <FaGithub />
+                                        </LinkButton>
+                                    )}
+                                </ProjectLinks>
+                            </ContentContainer>
+                        </ProjectItem>
+                    );
+                })}
+            </ProjectsList>
         </ProjectsSectionWrapper>
     );
 };
-
 
 export default ProjectsSection;
